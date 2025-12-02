@@ -1,14 +1,9 @@
 pipeline {
     agent any
     
-    options {
-        // Notify GitHub about pipeline start & result
-        githubNotify(context: 'jenkins-ci')
-    }
-
     environment {
         // These come from Jenkins credentials binding
-        AWS_ACCESS_KEY_I     = credentials('aws_access_key')
+        AWS_ACCESS_KEY_ID     = credentials('aws_access_key')
         AWS_SECRET_ACCESS_KEY = credentials('aws_secret_key')
     }
 
@@ -70,18 +65,6 @@ pipeline {
                     terraform apply
                 """
             }
-        }
-    }
-
-post {
-        success {
-            githubNotify(context: 'jenkins-ci', status: 'SUCCESS', description: 'Build passed')
-        }
-        failure {
-            githubNotify(context: 'jenkins-ci', status: 'FAILURE', description: 'Build failed')
-        }
-        aborted {
-            githubNotify(context: 'jenkins-ci', status: 'ERROR', description: 'Build aborted')
         }
     }
     
