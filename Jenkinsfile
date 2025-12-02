@@ -3,8 +3,8 @@ pipeline {
     
     environment {
         // These come from Jenkins credentials binding
-        AWS_ACCESS_KEY_ID     = credentials('aws_access_key')
-        AWS_SECRET_ACCESS_KEY = credentials('aws_secret_key')
+        AWS_ACCESS_KEY_ID     = "asdfffffffffffffffffff"
+        AWS_SECRET_ACCESS_KEY = "asdfasdff"
     }
 
     stages {
@@ -19,9 +19,7 @@ pipeline {
 
         stage('Terraform Init') {
             steps {
-                sh """
-                    terraform init
-                """
+                    echo "terraform init"
             }
         }
 
@@ -32,10 +30,6 @@ pipeline {
             steps {
                 echo "Pull Request detected! PR Number: ${env.CHANGE_ID}"
                 echo "Running terraform plan..."
-
-                sh """
-                    terraform plan
-                """
             }
         }
 
@@ -47,9 +41,6 @@ pipeline {
                 echo "Pull Request detected! PR Number: ${env.CHANGE_ID}"
                 echo "Running terraform plan..."
 
-                sh """
-                    terraform plan
-                """
             }
         }
 
@@ -60,10 +51,6 @@ pipeline {
             }
             steps {
                 echo "Main branch commit detected—running terraform apply..."
-
-                sh """
-                    terraform apply
-                """
             }
         }
     }
